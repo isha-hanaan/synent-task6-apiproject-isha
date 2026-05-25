@@ -9,6 +9,18 @@ function App() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    const getBackgroundClass = () => {
+        if (!weather) return "default-bg";
+        const condition = weather.weather[0].main.toLowerCase();
+
+        if (condition.includes("clear")) return "clear-bg";
+        if (condition.includes("cloud")) return "cloudy-bg";
+        if (condition.includes("rain") || condition.includes("drizzle") || condition.includes("thunderstorm")) return "rain-bg";
+        if (condition.includes("snow")) return "snow-bg";
+
+        return "default-bg"; // fallback for mist, haze, etc.
+    };
+
     const fetchWeather = async () => {
         if (!city.trim()) return;
         setLoading(true);
@@ -25,7 +37,6 @@ function App() {
             }
 
             const data = await response.json();
-
             setWeather(data);
 
         } catch (err) {
@@ -36,7 +47,7 @@ function App() {
     };
 
     return (
-        <div className="app">
+        <div className={`app ${getBackgroundClass()}`}>
 
             <div className="weather-card">
                 <h1>MoodCast</h1>
@@ -46,20 +57,29 @@ function App() {
                     placeholder="Search city..."
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && fetchWeather()}
                 />
 
                 <button onClick={fetchWeather}>
                     Search
                 </button>
 
-                {loading && <p>Loading weather...</p>}
-                {error && <p>{error}</p>}
+                {loading && <p className="status-msg">Loading weather...</p>}
+                {error && <p className="status-msg error">{error}</p>}
 
                 {weather && (
-                    <div>
+                    <div className="weather-info">
                         <h2>{weather.name}</h2>
-                        <p>{weather.main.temp}°C</p>
-                        <p>Humidity: {weather.main.humidity}%</p>
+
+                        <img
+                            src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                            alt={weather.weather[0].description}
+                            className="weather-icon"
+                        />
+
+                        <p className="temp">{Math.round(weather.main.temp)}°C</p>
+                        <p className="condition">{weather.weather[0].description}</p>
+                        <p className="humidity">Humidity: {weather.main.humidity}%</p>
                     </div>
                 )}
 
