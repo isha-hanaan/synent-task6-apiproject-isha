@@ -1,39 +1,105 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  background: #f4f7fb;
 }
 
 .app {
   min-height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(to bottom right, #60a5fa, #4338ca);
+  padding: 20px;
+
+  background: linear-gradient(to bottom right,
+      #60a5fa,
+      #4338ca);
 }
 
 .weather-card {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
   width: 350px;
+
+  background: white;
+
+  padding: 32px;
+
+  border-radius: 20px;
+
   text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.weather-card h1 {
+  margin-bottom: 10px;
+
+  color: #1e293b;
+
+  font-size: 2rem;
+}
+
+.weather-card p {
+  color: #475569;
 }
 
 input {
   width: 100%;
+
   padding: 12px;
+
   margin-top: 20px;
+
+  border: 1px solid #cbd5e1;
+
   border-radius: 10px;
-  border: 1px solid #ccc;
+
+  font-size: 1rem;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #2563eb;
 }
 
 button {
+  width: 100%;
+
   margin-top: 20px;
+
   padding: 12px 20px;
+
   border: none;
-  background: #2563eb;
-  color: white;
+
   border-radius: 10px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
   cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+}
+
+button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: scale(0.98);
 }
